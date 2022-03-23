@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Libro>
+@{
+    ViewData["Title"] = "Listado de Libros";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="card-header">
+        <h1>Listado de Libros</h1>
+    </div>
+    <div class="row">
+        <a asp-controller="Libros" asp-action="CreateGET" class="btn btn-primary mt-2">Agregar nuevo libro</a>
+    </div>
+
+    <div class="row mt-3">
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => m.Id)</th>
+                        <th>@Html.DisplayNameFor(m => m.Titulo)</th>
+                        <th>@Html.DisplayNameFor(m => m.Descripcion)</th>
+                        <th>@Html.DisplayNameFor(m => m.FechaPublicacion)</th>
+                        <th>@Html.DisplayNameFor(m => m.Autor)</th>
+                        <th>@Html.DisplayNameFor(m => m.Precio)</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+
+                <!-- Cuerpo de la tabla: -->
+
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <td>@book.Id</td>
+                        <td>@book.Titulo</td>
+                        <td>@book.Descripcion</td>
+                        @*<td>@book.FechaPublicacion.GetDateTimeFormats()[3]</td>*@
+                        <td>@book.FechaPublicacion.ToString("MM/dd/yyyy")</td>
+                        <td>@book.Autor</td>
+                        <td>@book.Precio</td>
+
+                        <td>
+                            <a asp-controller="Libros" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-primary">Modificar</a>
+                        </td>
+
+                        <td>
+                            <a asp-controller="Libros" asp-action="Delete" asp-route-id="@book.Id" class="btn btn-primary">Eliminar</a>
+                        </td>
+
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p>No existen registros para mostrar</p>
+        }
+    </div>
+
+</div>
+
